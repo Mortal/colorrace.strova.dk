@@ -1,42 +1,51 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.App {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    background: #1a1a1a;
+    justify-content: space-between;
+
+    & > .AppGame, & > .AppMiddle {
+        flex: 0 0 auto;
+    }
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+& > .AppTutorial {
+    flex: 1 1 auto;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Portrait layout */
+.App {
+    flex-direction: column;
+
+    & > .AppGame {
+        width: min(100vw,45.4545vh);
+        height: min(100vw,45.4545vh);
+    }
+
+    & > .AppMiddle {
+        height: min(20vw,9.091vh);
+        width: min(20vw,9.091vh);
+        display: flex;
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+/* Landscape layout */
+@media screen and (orientation: landscape) {
+    .App {
+        flex-direction: row;
+    }
 
-.card {
-  padding: 2em;
-}
+    .App > .AppGame {
+        width: min(100vh,45.4545vw);
+        height: min(100vh,45.4545vw);
+    }
 
-.read-the-docs {
-  color: #888;
+    .App > .AppMiddle {
+        height: min(20vh,9.091vw);
+        width: min(20vh,9.091vw);
+        display: flex;
+    }
 }
