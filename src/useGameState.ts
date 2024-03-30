@@ -21,10 +21,12 @@ export function useGameState(): GameState {
     const done1 = goalCheck(state1);
     const done2 = goalCheck(state2);
     const handleChange1 = React.useCallback(
-        (move: Move, _drag: boolean) => handleChange(move, setState1, goalCheck, setWinner),
+        (move: Move, _drag: boolean) =>
+            handleChange(move, setState1, goalCheck, () => setWinner(w => w == null ? 1 : w)),
         [goalCheck, setState1]);
     const handleChange2 = React.useCallback(
-        (move: Move, _drag: boolean) => handleChange(move, setState2, goalCheck, setWinner),
+        (move: Move, _drag: boolean) =>
+            handleChange(move, setState2, goalCheck, () => setWinner(w => w == null ? 2 : w)),
         [goalCheck, setState2]);
     const onTutorialEnd = () => {
         setState1(state2);
@@ -38,7 +40,7 @@ async function handleChange(
     move: Move,
     setState: React.Dispatch<React.SetStateAction<GridTile[]>>,
     goalCheck: (state: GridTile[]) => boolean,
-    setWinner: React.Dispatch<React.SetStateAction<1 | 2 | null>>
+    setWinner: () => void,
 ): Promise<GridTile[] | null | undefined> {
     const newState = await new Promise<GridTile[] | null>(resolve => {
         setState(
@@ -50,6 +52,6 @@ async function handleChange(
             }
         );
     });
-    if (newState != null && goalCheck(newState)) setWinner(w => w == null ? 2 : w);
+    if (newState != null && goalCheck(newState)) setWinner();
     return newState;
 }
